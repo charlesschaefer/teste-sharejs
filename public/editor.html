@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title>Teste do Editor</title>
+  <!-- <script type="text/javascript" src="js/bcsocket.js"></script> transport
+  <script type="text/javascript" src="js/webclient/share.uncompressed.js"></script>      ShareJS
+  <script type="text/javascript" src="js/webclient/json.uncompressed.js"></script>   helper to attach JSON to ShareJS server -->
+  
+  <script src="/channel/bcsocket.js"></script>
+  <script src="/share/share.uncompressed.js"></script>
+  <script src="/share/json.uncompressed.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  
+</head>
+<body>
+
+	<label>
+		Editor de JSON<br />
+		<textarea name="editorjs" id="editorjs" cols="30" rows="10"></textarea><br />
+		<!-- <textarea name="result" id="result" cols="30" rows="10"></textarea> -->
+    <br />
+    <button onclick="adiciona()">Adicionar</button>
+	</label>
+	<script type="text/javascript">
+            // get the textarea element 
+            var elem = document.getElementById("editorjs");
+
+            var docname = getDocName();
+
+            // window.onload = function() {
+            //   sharejs.open('charles', 'text', function() {
+            //     console.log('teste bruto');
+            //   });
+            // };
+
+            var $state = null;
+            // connect to the server
+            var connection = sharejs.open(docname, 'json', function(error, doc) {
+              $state = doc;
+              // this function is called once the connection is opened
+              if (error) {
+                console.log("ERROR:", error);
+              } else {
+                console.log("Tudo rodando bem a beça", doc);
+                  // attach the ShareJS document to the textarea
+                  if (doc.version == 0) {
+                    doc.set(getStartJSON());
+                  }
+              }
+
+              doc.on('change', function() {
+                console.log('Version: ', doc.version);
+                elem.innerHTML = JSON.stringify(doc.get());
+              });
+            });
+  </script>
+</body>
+</html>

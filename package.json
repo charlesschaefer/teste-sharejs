@@ -1,0 +1,19 @@
+{
+  "name": "teste-sharejs",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "share": "<0.7",
+    "connect": "*",
+    "serve-static": "*",
+    "browserchannel": "*",
+    "http": "*",
+    "morgan": "*"
+  }
+}
