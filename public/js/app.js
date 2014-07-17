@@ -78,3 +78,11 @@ function adiciona() {
 	addScene(obj);
 	$state.set(obj);
 }
+
+function muda(cena) {
+	console.log("Cena", cena);
+	// scenes[cena].itens[0].width
+	$state.at(['scenes', cena, 'itens', 0, 'width']).set(100);
+	// scenes[cena].itens[1].height
+	$state.at(['scenes', cena, 'itens', 1, 'height']).set(100);
+}

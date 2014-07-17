@@ -5,6 +5,7 @@
   <script type="text/javascript" src="js/webclient/share.uncompressed.js"></script>      ShareJS
   <script type="text/javascript" src="js/webclient/json.uncompressed.js"></script>   helper to attach JSON to ShareJS server -->
   
+  <script src="/js/jquery.js"></script>
   <script src="/channel/bcsocket.js"></script>
   <script src="/share/share.uncompressed.js"></script>
   <script src="/share/json.uncompressed.js"></script>
@@ -16,9 +17,13 @@
 	<label>
 		Editor de JSON<br />
 		<textarea name="editorjs" id="editorjs" cols="30" rows="10"></textarea><br />
+    <div id="msg" style="color:green"></div>
 		<!-- <textarea name="result" id="result" cols="30" rows="10"></textarea> -->
     <br />
-    <button onclick="adiciona()">Adicionar</button>
+    <button onclick="adiciona()">Adicionar</button><br />
+    <button onclick="muda(0)">Muda Cena 1</button><br />
+    <button onclick="muda(1)">Muda Cena 2</button><br />
+
 	</label>
 	<script type="text/javascript">
             // get the textarea element 
@@ -40,16 +45,25 @@
               if (error) {
                 console.log("ERROR:", error);
               } else {
-                console.log("Tudo rodando bem a beça", doc);
+                console.log("Tudo rodando muito bem", doc);
                   // attach the ShareJS document to the textarea
                   if (doc.version == 0) {
                     doc.set(getStartJSON());
                   }
               }
 
+              // chamado sempre que há alguma mudança no documento original
               doc.on('change', function() {
                 console.log('Version: ', doc.version);
                 elem.innerHTML = JSON.stringify(doc.get());
+              });
+
+              // chamado quando outro usuário fez alteração no documento
+              doc.on('remoteop', function(path, op) {
+                console.log("path", path, "op", op);
+
+                var msg = $('#msg').html('Alterou no remote ').show('slow');
+                setTimeout(function() { msg.hide('slow');}, 1000);
               });
             });
   </script>
